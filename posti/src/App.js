@@ -1,9 +1,10 @@
 import './App.css';
+import Board from './View/Board';
 
 function App() {
   return (
     <div className="App">
-      <header>PostI</header>
+      <Board/>
     </div>
   );
 }
