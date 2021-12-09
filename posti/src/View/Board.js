@@ -10,7 +10,8 @@ class Board extends Component {
       super(props);
       this.state = {
         value: "",
-        currentPostIts: []
+        currentPostIts: [],
+        selectedColor: "#faf393"
       }
       this.handleChange = this.handleChange.bind(this);
       this.submitPostIt = this.submitPostIt.bind(this);
@@ -22,9 +23,9 @@ class Board extends Component {
     }
      submitPostIt = (event) => {
       var temp = {
-        header: "titel",
         message: this.state.value,
-        date: Date.now
+        date: new Date().toLocaleString(),
+        selectedColor: this.state.selectedColor,
       };
       this.setState({currentPostIts: this.state.currentPostIts.concat([temp])}, ()=> this.notifyServer());
       console.log("from notify server: " + this.state.currentPostIts);
@@ -44,14 +45,32 @@ class Board extends Component {
         this.setState({currentPostIts: dataFromServer});
       }
     }
+
+    setColor = (color) => {
+      this.setState({selectedColor: color});
+    }
+
     render(){
       return(
+        <React.Fragment>
+        <form className = "addPost" onSubmit = {this.submitPostIt}>
+          <label>New Post</label>
+          <textarea className = "formInput" type = "text" maxLength = "120" onChange={this.handleChange}></textarea>
+          <div className = "colorPicker">
+            <div className = "color" id = "yellow" onClick = {() => this.setState({selectedColor: '#faf393'})}></div>
+            <div className = "color" id = "green" onClick = {() => this.setState({selectedColor: '#9eff78'})}></div>
+            <div className = "color" id = "red" onClick = {() => this.setState({selectedColor: '#fc5858'})}></div>
+            <div className = "color" id = "blue" onClick = {() => this.setState({selectedColor: '#7aa7ff'})}></div>
+          </div>
+         
+          <button type="submit">Submit</button>
+        </form>
         <div className="Board">
-          <form className = "addPost" onSubmit = {this.submitPostIt}><input type = "text" onChange={this.handleChange}></input><button type="submit">Submit</button></form>
             {this.state.currentPostIts.map((post, index) => {
-              return <PostIt header = {post.header} message = {post.message} date = {post.date} key = {index}/>;
+              return <PostIt message = {post.message} date = {post.date} key = {index} selectedColor = {post.selectedColor}></PostIt>;
             })}
         </div>
+        </React.Fragment>
       )}
 
   }

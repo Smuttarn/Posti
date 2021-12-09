@@ -1,23 +1,84 @@
 .Board {
-
-    /* margin: 100px;
-    padding: 10%;
-    width: 70%;
-    height: 80%;
+    top: 50%;
+    margin: 25px;
+    /* margin-top: 50px; */
+    padding: 0px;
     display: flex;
-    justify-content: center;
-    align-items: center; */
+    vertical-align: middle;
+    flex-direction: row;
+    flex-wrap: wrap;
 
-    width: 90%;
-    height: 90%;
-    position: absolute;
+    min-height: 90vh;
+    max-height: 100%;
+
+    width: 90vw;
+
+    /* position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%); */ 
 
-    border: 5px solid brown;
-    background-color: darksalmon;
+    border: 10px solid #2b221a;
+    /* background-color: darksalmon; */
+    background-image: url("../Assets/bulletin-board-g238ad22e9_1920.jpg");
+
 }
+
+
+.formInput{
+    height: 80%;
+    width: 90%;
+    font-size: large;
+    resize: none;
+    word-wrap: break-word;
+    word-break: break-all;
+    background-color: #faf393;
+}
+
+.addPost{
+    top: 30px;
+    left: 10px;
+    height: 20vh;
+    width: 10vw;
+    position: relative;
+
+}
+
+.colorPicker{
+    display:flex;
+    height: 50px;
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.color{
+    width: 30px;
+    height: 30px;
+    border-radius: 50px;
+    border: 1px solid black;
+    display: flex;
+    margin: 10px;
+    cursor: pointer;
+}
+
+
+#yellow{
+    background-color: #faf393;
+}
+
+#green{
+    background-color:#9eff78;
+}
+
+#blue{
+    background-color:#7aa7ff;
+}
+
+#red{
+    background-color: #fc5858;
+}
+
 
 .Postit {
     /* position: relative;
@@ -30,27 +91,26 @@
     height: 150px;
     border-radius: 15px;
     border: 2px solid black; 
-    background-color: yellow;
-
+    
+    word-wrap: break-word;
+    overflow-wrap: break-word;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+
     /* padding: 5%; */
 }
 
-.addPost{
-    
-}
+
 
 .Window {
-
     /*Detta tycks inte påverka något för tillfället*/
-    /* margin: auto;
+    margin: auto;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    /* justify-content: center;
+    align-items: center; */
     width: 100%;
-    height: 100%; */
+    height: 100%;
 }
 
 
