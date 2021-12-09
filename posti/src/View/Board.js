@@ -1,8 +1,9 @@
 import PostIt from "./PostIt";
 import "./Style.css";
 import React, { Component } from 'react';
+import { w3cwebsocket as W3CWebSocket } from "websocket";
 
-
+const client = new W3CWebSocket('ws://127.0.0.1:8000');
 
 class Board extends Component {
     constructor(props) {
@@ -18,24 +19,22 @@ class Board extends Component {
       this.submitPostIt = this.submitPostIt.bind(this);
     }
 
+    notifyServer = () => {
+      client.send(JSON.stringify(this.state.currentPostIts))
+    }
     submitPostIt = (event) => {
-      console.log("the submitted value is: " + this.state.value);
-      var temp = this.state.currentPostIts.add({
+      var temp = {
         header: "titel",
         message: this.state.value,
         date: Date.now
-      })
-      console.log(temp);
-      // this.setState({currentPostIts: temp});
-      // console.log(this.state.currentPostIts);
-        
+      };
+      this.setState({currentPostIts: this.state.currentPostIts.concat([temp])});
+      this.notifyServer();
       event.preventDefault();
-        // this.setState.currentPostIts.add(data);
     }
 
     handleChange = (event) => {
       this.setState({value: event.target.value});
-      console.log("the changed value is:" + event.target.value);
     }
 
     render(){

@@ -47,6 +47,8 @@ wsServer.on('request', function(request) {
   connection.on('message', function(message) {
     if (message.type === 'utf8') {
       const dataFromClient = JSON.parse(message.utf8Data);
+      console.log("the message from client content" + dataFromClient.content);
+      console.log("the message from client type" + dataFromClient.type);
       const json = { type: dataFromClient.type };
       if (dataFromClient.type === typesDef.USER_EVENT) {
         users[userID] = dataFromClient;
