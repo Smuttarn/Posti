@@ -1,10 +1,10 @@
 import './App.css';
-import Board from './View/Board';
+import Window from './View/Window';
 
 function App() {
   return (
     <div className="App">
-      <Board/>
+      <Window/>
     </div>
   );
 }
