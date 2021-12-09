@@ -14,6 +14,7 @@ class Board extends Component {
       }
       this.handleChange = this.handleChange.bind(this);
       this.submitPostIt = this.submitPostIt.bind(this);
+      console.log("client: " + JSON.stringify(client));
     }
 
     notifyServer = () => {
@@ -26,7 +27,7 @@ class Board extends Component {
         date: Date.now
       };
       this.setState({currentPostIts: this.state.currentPostIts.concat([temp])}, ()=> this.notifyServer());
-      console.log(this.state.currentPostIts);
+      console.log("from notify server: " + this.state.currentPostIts);
       event.preventDefault();
     }
 
@@ -39,7 +40,8 @@ class Board extends Component {
       };
       client.onmessage = (message) => {
         const dataFromServer = JSON.parse(message.data);
-        this.setState({currentPostIts: this.state.currentPostIts.concat([dataFromServer])});
+        console.log("from on message: " +JSON.stringify(dataFromServer));
+        this.setState({currentPostIts: dataFromServer});
       }
     }
     render(){

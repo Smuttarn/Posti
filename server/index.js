@@ -36,16 +36,19 @@ const typesDef = {
   USER_EVENT: "userevent",
   CONTENT_CHANGE: "contentchange"
 }
-
-wsServer.on('request', function(request) {
+var messages = [];
+wsServer.on('request', function(request){ 
   var userID = getUniqueID();
   console.log((new Date()) + ' Recieved a new connection from origin ' + request.origin + '.');
   // You can rewrite this part of the code to accept only the requests from allowed origin
   const connection = request.accept(null, request.origin);
   clients[userID] = connection;
   console.log('connected: ' + userID + ' in ' + Object.getOwnPropertyNames(clients));
+  sendMessage(messages);
   connection.on('message', function(message) {
       const dataFromClient = JSON.parse(message.utf8Data);
+      console.log("data: "+ JSON.stringify(dataFromClient));
+      messages = JSON.stringify(dataFromClient);
       sendMessage(JSON.stringify(dataFromClient));
   });
   // user disconnected
@@ -55,6 +58,5 @@ wsServer.on('request', function(request) {
     json.data = { users, userActivity };
     delete clients[userID];
     delete users[userID];
-    sendMessage(JSON.stringify(json));
   });
 });
