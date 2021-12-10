@@ -15,7 +15,6 @@ class Board extends Component {
       }
       this.handleChange = this.handleChange.bind(this);
       this.submitPostIt = this.submitPostIt.bind(this);
-      console.log("client: " + JSON.stringify(client));
     }
 
     notifyServer = () => {
@@ -28,7 +27,7 @@ class Board extends Component {
         selectedColor: this.state.selectedColor,
       };
       this.setState({currentPostIts: this.state.currentPostIts.concat([temp])}, ()=> this.notifyServer());
-      console.log("from notify server: " + this.state.currentPostIts);
+      this.setState({value: ""});
       event.preventDefault();
     }
 
@@ -37,25 +36,18 @@ class Board extends Component {
     }
     componentWillMount(){
       client.onopen = () => {
-        console.log('WebSocket Client Connected');
       };
       client.onmessage = (message) => {
         const dataFromServer = JSON.parse(message.data);
-        console.log("from on message: " +JSON.stringify(dataFromServer));
         this.setState({currentPostIts: dataFromServer});
       }
     }
-
-    setColor = (color) => {
-      this.setState({selectedColor: color});
-    }
-
     render(){
       return(
         <React.Fragment>
         <form className = "addPost" onSubmit = {this.submitPostIt}>
           <label>New Post</label>
-          <textarea className = "formInput" type = "text" maxLength = "120" onChange={this.handleChange}></textarea>
+          <textarea value={this.state.value} className = "formInput" type = "text" maxLength = "120" onChange={this.handleChange}></textarea>
           <div className = "colorPicker">
             <div className = "color" id = "yellow" onClick = {() => this.setState({selectedColor: '#faf393'})}></div>
             <div className = "color" id = "green" onClick = {() => this.setState({selectedColor: '#9eff78'})}></div>

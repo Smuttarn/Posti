@@ -16,14 +16,6 @@ const getUniqueID = () => {
 
 // I'm maintaining all active connections in this object
 const clients = {};
-// I'm maintaining all active users in this object
-const users = {};
-// The current editor content is maintained here.
-let editorContent = null;
-// User activity history.
-let userActivity = [];
-
-
 
 const sendMessage = (json) => {
   // We are sending the current data to all connected clients
@@ -32,10 +24,6 @@ const sendMessage = (json) => {
   });
 }
 
-const typesDef = {
-  USER_EVENT: "userevent",
-  CONTENT_CHANGE: "contentchange"
-}
 var messages = [];
 wsServer.on('request', function(request){ 
   var userID = getUniqueID();
@@ -54,9 +42,6 @@ wsServer.on('request', function(request){
   // user disconnected
   connection.on('close', function(connection) {
     console.log((new Date()) + " Peer " + userID + " disconnected.");
-    const json = { type: typesDef.USER_EVENT };
-    json.data = { users, userActivity };
     delete clients[userID];
-    delete users[userID];
   });
 });
